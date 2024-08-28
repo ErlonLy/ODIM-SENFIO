@@ -21,7 +21,7 @@ const Calendar = () => {
   const [currentEvents, setCurrentEvents] = useState([]);
 
   const handleDateClick = (selected) => {
-    const title = prompt("Please enter a new title for your event");
+    const title = prompt("Insira o evento: ");
     const calendarApi = selected.view.calendar;
     calendarApi.unselect();
 
@@ -39,7 +39,7 @@ const Calendar = () => {
   const handleEventClick = (selected) => {
     if (
       window.confirm(
-        `Are you sure you want to delete the event '${selected.event.title}'`
+        `Tem certeza disso? Vai apagar o evento: '${selected.event.title}'`
       )
     ) {
       selected.event.remove();
@@ -48,9 +48,10 @@ const Calendar = () => {
 
   return (
     <Box m="20px">
-      <Header title="Calendar" subtitle="Full Calendar Interactive Page" />
+      <Header title="Calendário" subtitle="Calendário de eventos" />
 
       <Box display="flex" justifyContent="space-between">
+        
         {/* CALENDAR SIDEBAR */}
         <Box
           flex="1 1 20%"
@@ -58,7 +59,10 @@ const Calendar = () => {
           p="15px"
           borderRadius="4px"
         >
-          <Typography variant="h5">Events</Typography>
+
+
+          <Typography variant="h5">Eventos</Typography>
+          
           <List>
             {currentEvents.map((event) => (
               <ListItem
@@ -86,7 +90,7 @@ const Calendar = () => {
           </List>
         </Box>
 
-        {/* CALENDAR */}
+        {/* CALENDARIO */}
         <Box flex="1 1 100%" ml="15px">
           <FullCalendar
             height="75vh"
@@ -109,6 +113,7 @@ const Calendar = () => {
             select={handleDateClick}
             eventClick={handleEventClick}
             eventsSet={(events) => setCurrentEvents(events)}
+            // Aba de eventos
             initialEvents={[
               {
                 id: "12315",

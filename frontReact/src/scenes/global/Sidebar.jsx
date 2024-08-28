@@ -170,15 +170,24 @@ const Sidebar = () => {
               icon={<BuildCircleIcon/>}
 
             />
-
+            <Item
+              title="Calendario"
+              to="/calendar"
+              icon={<CalendarTodayOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+      
 
             <Typography
               variant="h6"
               color={colors.grey[300]}
               sx={{ m: "15px 0 5px 20px" }}
             >
-              Page 2
+              Senfio - ADM
             </Typography>
+
+
             <Item
               title="Cadastrar Novo Cliente"
               to="/cad_form"
@@ -187,12 +196,13 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
             <Item
-              title="Calendario"
-              to="/calendar"
-              icon={<CalendarTodayOutlinedIcon />}
+              title="Remover Usuários"
+              to="/team"
+              icon={<PeopleOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
+            
             
             <Typography
               variant="h6"
