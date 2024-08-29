@@ -1,5 +1,5 @@
-import React from 'react';
-import { Box, useTheme, Select, MenuItem } from "@mui/material";
+import React, { useState } from 'react';
+import { Box, useTheme, Select, MenuItem, TextField } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataMaintenance } from "../../data/mockData";
@@ -17,24 +17,33 @@ const baseOptions = [
   { value: 'pending', label: 'Hemobra' },
 ];
 
-
 const Maintenance = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [rows, setRows] = useState(mockDataMaintenance);
+
+  const handleCellEditCommit = (params) => {
+    const updatedRows = rows.map((row) => {
+      if (row.id === params.id) {
+        return { ...row, [params.field]: params.value };
+      }
+      return row;
+    });
+    setRows(updatedRows);
+  };
+
   const columns = [
     { //Tipo de dispositivo
       field: "id_dispositivo", 
       headerName: "Dispositivo" ,
       cellClassName: "name-column--cell",
     },
-
-    { //Numer de série
+    { //Número de série
       field: "nome",
       headerName: "Numero de serie",
       flex: 1,
       cellClassName: "name-column--cell",
     },
-
     { //Escolhas de cliente
       field:"base",
       headerName:"Cliente",
@@ -44,7 +53,7 @@ const Maintenance = () => {
           value={params.value}
           onChange={(event) => {
             const newValue = event.target.value;
-            params.api.updateRows([{ ...params.row, status: newValue }]);
+            params.api.updateRows([{ ...params.row, base: newValue }]);
           }}
         >
           {baseOptions.map((option) => (
@@ -55,19 +64,30 @@ const Maintenance = () => {
         </Select>
       ),
     },
-
+    { //Problema
+      field: "problema",
+      headerName: "Problema",
+      flex: 1,
+      renderCell: (params) => (
+        <TextField
+          value={params.value || ''}
+          onChange={(event) => {
+            const newValue = event.target.value;
+            params.api.updateRows([{ ...params.row, problema: newValue }]);
+          }}
+        />
+      ),
+    },
     { //Data inicial
       field: "date",
       headerName: "Data de Entrada",
       flex: 1,
     },
-
     { //Data de entrega
       field: "date2",
       headerName: "Data de Saída",
       flex: 1,
     },
-
     { //status
       field: "status",
       headerName: "Status",
@@ -88,7 +108,20 @@ const Maintenance = () => {
         </Select>
       ),
     },
-
+    { //Solução
+      field: "solucao",
+      headerName: "Solução",
+      flex: 1,
+      renderCell: (params) => (
+        <TextField
+          value={params.value || ''}
+          onChange={(event) => {
+            const newValue = event.target.value;
+            params.api.updateRows([{ ...params.row, solucao: newValue }]);
+          }}
+        />
+      ),
+    },
   ];
 
   return (
@@ -123,7 +156,12 @@ const Maintenance = () => {
           },
         }}
       >
-        <DataGrid checkboxSelection rows={mockDataMaintenance} columns={columns} />
+        <DataGrid
+          checkboxSelection
+          rows={rows}
+          columns={columns}
+          onCellEditCommit={handleCellEditCommit}
+        />
       </Box>
     </Box>
   );

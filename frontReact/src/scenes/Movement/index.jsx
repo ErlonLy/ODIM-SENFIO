@@ -6,21 +6,27 @@ import { mockDataMovement } from "../../data/mockData";
 import Header from "../../components/Header";
 
 const statusOptions = [
-  { value: 'active', label: decodeURIComponent('Checar base') },
-  { value: 'inactive', label: decodeURIComponent('Não liga') },
-  { value: 'pending', label: decodeURIComponent('Ajuste calibração') },
+  { value: 'active', label: 'Checar base' },
+  { value: 'inactive', label: 'Não liga' },
+  { value: 'pending', label: 'Ajuste calibração' },
 ];
 
 const baseOptions = [
-  { value: 'active', label: decodeURIComponent('RHP') },
-  { value: 'inactive', label: decodeURIComponent('Hemorio') },
-  { value: 'pending', label: decodeURIComponent('Hemobra') },
+  { value: 'active', label: 'RHP' },
+  { value: 'inactive', label: 'Hemorio' },
+  { value: 'pending', label: 'Hemobra' },
 ];
 
 const processOptions = [
-  { value: 'active', label: decodeURIComponent('Em Calib') },
-  { value: 'inactive', label: decodeURIComponent('Em Conexão') },
-  { value: 'pending', label: decodeURIComponent('De teste para manutenção') },
+  { value: 'active', label: 'Em Calib' },
+  { value: 'inactive', label: 'Em Conexão' },
+  { value: 'pending', label: 'De teste para manutenção' },
+];
+
+const dispoOptions = [
+  { value: 'T1', label: 'T1' },
+  { value: 'T2', label: 'T2' },
+  { value: 'T3', label: 'T3' },
 ];
 
 const Movement = () => {
@@ -146,13 +152,20 @@ const Movement = () => {
   return (
     <Box m="20px">
       <Header title="Estágios de Movimentação" subtitle="Andamento dos dispositivos" />
+      
       <Box display="flex" justifyContent="space-between" mb="20px">
-        <TextField
-          label="Dispositivo"
+        <Select
           value={newItem.id_dispositivo}
           onChange={(e) => setNewItem({ ...newItem, id_dispositivo: e.target.value })}
-          inputProps={{ maxLength: 4 }}
-        />
+          displayEmpty
+        >
+          <MenuItem value="" disabled>Dispositivo</MenuItem>
+          {dispoOptions.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </Select>
         <TextField
           label="Número de série"
           value={newItem.nome}
