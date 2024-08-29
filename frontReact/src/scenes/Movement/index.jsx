@@ -6,21 +6,21 @@ import { mockDataMovement } from "../../data/mockData";
 import Header from "../../components/Header";
 
 const statusOptions = [
-  { value: 'active', label: 'Checar base' },
-  { value: 'inactive', label: 'Não liga' },
-  { value: 'pending', label: 'Ajuste calibração' },
+  { value: 'active', label: decodeURIComponent('Checar base') },
+  { value: 'inactive', label: decodeURIComponent('Não liga') },
+  { value: 'pending', label: decodeURIComponent('Ajuste calibração') },
 ];
 
 const baseOptions = [
-  { value: 'active', label: 'RHP' },
-  { value: 'inactive', label: 'Hemorio' },
-  { value: 'pending', label: 'Hemobra' },
+  { value: 'active', label: decodeURIComponent('RHP') },
+  { value: 'inactive', label: decodeURIComponent('Hemorio') },
+  { value: 'pending', label: decodeURIComponent('Hemobra') },
 ];
 
 const processOptions = [
-  { value: 'active', label: 'Em Calib' },
-  { value: 'inactive', label: 'Em Conexão' },
-  { value: 'pending', label: 'De teste para manutenção' },
+  { value: 'active', label: decodeURIComponent('Em Calib') },
+  { value: 'inactive', label: decodeURIComponent('Em Conexão') },
+  { value: 'pending', label: decodeURIComponent('De teste para manutenção') },
 ];
 
 const Movement = () => {
@@ -69,7 +69,7 @@ const Movement = () => {
           value={params.value}
           onChange={(event) => {
             const newValue = event.target.value;
-            params.api.updateRows([{ ...params.row, status: newValue }]);
+            params.api.updateRows([{ ...params.row, base: newValue }]);
           }}
         >
           {baseOptions.map((option) => (
@@ -94,7 +94,7 @@ const Movement = () => {
           value={params.value}
           onChange={(event) => {
             const newValue = event.target.value;
-            params.api.updateRows([{ ...params.row, status: newValue }]);
+            params.api.updateRows([{ ...params.row, process: newValue }]);
           }}
         >
           {processOptions.map((option) => (
@@ -109,6 +109,17 @@ const Movement = () => {
       field: "date2",
       headerName: "Data de entrega",
       flex: 1,
+      renderCell: (params) => (
+        <TextField
+          type="date"
+          value={params.value}
+          onChange={(event) => {
+            const newValue = event.target.value;
+            params.api.updateRows([{ ...params.row, date2: newValue }]);
+          }}
+          InputLabelProps={{ shrink: true }}
+        />
+      ),
     },
     { //status
       field: "status",
