@@ -14,10 +14,15 @@ import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import BuildCircleIcon from '@mui/icons-material/BuildCircle';
+import React from 'react';
+import { useLocation } from 'react-router-dom';
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const location = useLocation();
+  if (location.pathname === '/login') return null;
+
   return (
     <MenuItem
       active={selected === title}

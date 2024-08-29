@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
 import { Box, TextField, Button, Typography } from "@mui/material";
+import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Login = ({ setIsAuthenticated }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleLogin = () => {
     // Aqui você pode adicionar a lógica de autenticação
     console.log('Email:', email);
     console.log('Password:', password);
+    // Simulação de login bem-sucedido
+    setIsAuthenticated(true);
+    navigate('/');
   };
 
   return (
@@ -18,7 +23,15 @@ const Login = () => {
       alignItems="center"
       justifyContent="center"
       height="100vh"
-    >
+      width="100vw"
+      position="fixed"
+      top={0}
+      left={0}
+      bgcolor="background.default"
+    > 
+      <Box mb={2}>
+        <img src="./assets/image.png" alt="logo" style={{ width: '150px' }} />
+      </Box>
       <Typography variant="h4" mb={2}>Login</Typography>
       <TextField
         label="Email"

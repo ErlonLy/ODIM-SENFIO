@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate, useLocation } from "react-router-dom";
 import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
@@ -18,23 +18,28 @@ import Calendar from "./scenes/calendar/calendar";
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const location = useLocation();
+  const isLoginPage = location.pathname === '/login';
 
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app">
-          <Sidebar isSidebar={isSidebar} />
+          {!isLoginPage && <Sidebar isSidebar={isSidebar} />}
           <main className="content">
-            <Topbar setIsSidebar={setIsSidebar} />
+            {!isLoginPage && <Topbar setIsSidebar={setIsSidebar} />}
             <Routes>
-              <Route path="/login" element={<Login />} /> */Inicio*/
-              <Route path="/" element={<Dashboard />} /> */Inicio*/
-              <Route path="/team" element={<Team />} /> */Clientes*/
-              <Route path="/contacts" element={<InfoClientes />} /> */Info Clientes*/
-              <Route path="/movement" element={<Movement />} /> --
-              <Route path="/cad_form" element={<Form />} /> */Cadastrar clientes*/
-              <Route path="/calendar" element={<Calendar />} /> */Calendário*/
+              <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
+              <Route path="/" element={isAuthenticated ? <Dashboard /> : <Navigate to="/login" />} />
+              <Route path="/dashboard" element={<Dashboard />} /> {/* Inicio */}
+              <Route path="/team" element={<Team />} /> {/* Clientes */}
+              <Route path="/contacts" element={<InfoClientes />} /> {/* Info Clientes */}
+              <Route path="/movement" element={<Movement />} /> {/* Movimentação */}
+              <Route path="/cad_form" element={<Form />} /> {/* Cadastrar clientes */}
+              <Route path="/calendar" element={<Calendar />} /> {/* Calendário */}
               <Route path="/pie" element={<Pie />} />
               <Route path="/history" element={<FAQ />} />
               <Route path="/maintenance" element={<Maintenance />} />
