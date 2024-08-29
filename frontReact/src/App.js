@@ -9,6 +9,7 @@ import InfoClientes from "./scenes/contacts";
 import Form from "./scenes/cad_form";
 import Pie from "./scenes/pie";
 import FAQ from "./scenes/history";
+import Login from "./scenes/login";
 import Maintenance from "./scenes/maintenance";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
@@ -27,6 +28,7 @@ function App() {
           <main className="content">
             <Topbar setIsSidebar={setIsSidebar} />
             <Routes>
+              <Route path="/login" element={<Login />} /> */Inicio*/
               <Route path="/" element={<Dashboard />} /> */Inicio*/
               <Route path="/team" element={<Team />} /> */Clientes*/
               <Route path="/contacts" element={<InfoClientes />} /> */Info Clientes*/
