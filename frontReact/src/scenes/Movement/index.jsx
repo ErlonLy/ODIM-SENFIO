@@ -1,14 +1,14 @@
-import React from 'react';
-import { Box, useTheme, Select, MenuItem } from "@mui/material";
+import React, { useState } from 'react';
+import { Box, useTheme, Select, MenuItem, TextField, Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataMovement } from "../../data/mockData";
 import Header from "../../components/Header";
 
 const statusOptions = [
-  { value: 'active', label: 'Active' },
-  { value: 'inactive', label: 'Inactive' },
-  { value: 'pending', label: 'Pending' },
+  { value: 'active', label: 'Checar base' },
+  { value: 'inactive', label: 'Não liga' },
+  { value: 'pending', label: 'Ajuste calibração' },
 ];
 
 const baseOptions = [
@@ -17,24 +17,49 @@ const baseOptions = [
   { value: 'pending', label: 'Hemobra' },
 ];
 
+const processOptions = [
+  { value: 'active', label: 'Em Calib' },
+  { value: 'inactive', label: 'Em Conexão' },
+  { value: 'pending', label: 'De teste para manutenção' },
+];
 
 const Movement = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [rows, setRows] = useState(mockDataMovement);
+  const [newItem, setNewItem] = useState({
+    id_dispositivo: '',
+    nome: '',
+    base: '',
+    date: '',
+    process: '',
+    status: '',
+  });
+
+  const handleAddItem = () => {
+    setRows([{ id: rows.length + 1, ...newItem }, ...rows]);
+    setNewItem({
+      id_dispositivo: '',
+      nome: '',
+      base: '',
+      date: '',
+      process: '',
+      status: '',
+    });
+  };
+
   const columns = [
     { //Tipo de dispositivo
       field: "id_dispositivo", 
       headerName: "Dispositivo" ,
       cellClassName: "name-column--cell",
     },
-
-    { //Numer de série
+    { //Número de série
       field: "nome",
-      headerName: "Numero de serie",
+      headerName: "Número de série",
       flex: 1,
       cellClassName: "name-column--cell",
     },
-
     { //Escolhas de cliente
       field:"base",
       headerName:"Cliente",
@@ -55,19 +80,36 @@ const Movement = () => {
         </Select>
       ),
     },
-
     { //Data inicial
       field: "date",
       headerName: "Data de uso",
       flex: 1,
     },
-
+    { //status
+      field: "process",
+      headerName: "Procedimento",
+      flex: 1,
+      renderCell: (params) => (
+        <Select
+          value={params.value}
+          onChange={(event) => {
+            const newValue = event.target.value;
+            params.api.updateRows([{ ...params.row, status: newValue }]);
+          }}
+        >
+          {processOptions.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </Select>
+      ),
+    },
     { //Data de entrega
       field: "date2",
       headerName: "Data de entrega",
       flex: 1,
     },
-
     { //status
       field: "status",
       headerName: "Status",
@@ -88,12 +130,72 @@ const Movement = () => {
         </Select>
       ),
     },
-
   ];
 
   return (
     <Box m="20px">
       <Header title="Estágios de Movimentação" subtitle="Andamento dos dispositivos" />
+      <Box display="flex" justifyContent="space-between" mb="20px">
+        <TextField
+          label="Dispositivo"
+          value={newItem.id_dispositivo}
+          onChange={(e) => setNewItem({ ...newItem, id_dispositivo: e.target.value })}
+          inputProps={{ maxLength: 4 }}
+        />
+        <TextField
+          label="Número de série"
+          value={newItem.nome}
+          onChange={(e) => setNewItem({ ...newItem, nome: e.target.value })}
+          inputProps={{ maxLength: 4 }}
+          inputMode="numeric"
+        />
+        <Select
+          value={newItem.base}
+          onChange={(e) => setNewItem({ ...newItem, base: e.target.value })}
+          displayEmpty
+        >
+          <MenuItem value="" disabled>Cliente</MenuItem>
+          {baseOptions.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </Select>
+        <TextField
+          label="Data de Entrada"
+          type="date"
+          value={newItem.date}
+          onChange={(e) => setNewItem({ ...newItem, date: e.target.value })}
+          InputLabelProps={{ shrink: true }}
+        />
+        <Select
+          value={newItem.process}
+          onChange={(e) => setNewItem({ ...newItem, process: e.target.value })}
+          displayEmpty
+        >
+          <MenuItem value="" disabled>Procedimento</MenuItem>
+          {processOptions.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </Select>
+        <Select
+          value={newItem.status}
+          onChange={(e) => setNewItem({ ...newItem, status: e.target.value })}
+          displayEmpty
+        >
+          <MenuItem value="" disabled>Status</MenuItem>
+          {statusOptions.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </Select>
+        <Button variant="contained" color="primary" onClick={handleAddItem}>
+          Adicionar
+        </Button>
+      </Box>
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -123,7 +225,7 @@ const Movement = () => {
           },
         }}
       >
-        <DataGrid checkboxSelection rows={mockDataMovement} columns={columns} />
+        <DataGrid checkboxSelection rows={rows} columns={columns} />
       </Box>
     </Box>
   );
