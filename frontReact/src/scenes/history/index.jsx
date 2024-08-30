@@ -46,12 +46,12 @@ const historyData = [
   },
   {
     id: 30,
-    title: "T1 - 030",
+    title: "T1 - 0030",
     details: "MAC: 0030",
     additionalInfo: {
       details1: { text: "Foi para teste de conexão no dia 01/08/2024.", user: "Usuário 1" },
-      details2: { text: "Detalhes da movimentação 1. Feito no dia 02/08/2024.", user: "Usuário 1" },
-      details3: { text: "Detalhes da movimentação 1. Feito no dia 10/08/2024.", user: "Usuário 1" },
+      details2: { text: "Detalhes da movimentação 2. Feito no dia 02/08/2024.", user: "Usuário 1" },
+      details3: { text: "Detalhes da movimentação 3. Feito no dia 10/08/2024.", user: "Usuário 1" },
     },
   },
   {
