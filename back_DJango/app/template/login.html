@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ODIM</title>
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="../static/img/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="../static/img/favicon.ico" type="image/x-icon">
+  
+
+  <!-- FontAwesome (para ícones) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+
+  <!-- CSS principal -->
+  <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+  <!-- Logotipo -->
+  <img src="../static/img/god-odin-logo-vector.png" alt="Logo ODIM" width="200" height="200" style="margin-bottom: 20px;">
+
+  <!-- Container principal -->
+  <div class="container" id="container">
+    <div class="form-container sign-in-container">
+      <form id="loginForm">
+        <h1>Login</h1>
+        <span>Mesmo acesso do gota</span>
+        <input type="text" id="usernameInput" placeholder="Nome" required />
+        <input type="password" placeholder="Senha" required />
+        <a href="#">Esqueceu sua senha?</a>
+        <button id="loginBtn">Entrar</button>
+      </form>
+    </div>
+    <div class="overlay-container">
+      <div class="overlay">
+        <div class="overlay-panel overlay-left">
+          <h1 id="welcomeText">Bem vindo de volta!</h1>
+          <p id="welcomeMessage">Para se manter conectado conosco, faça o login com suas informações pessoais</p>
+        </div>
+        <div class="overlay-panel overlay-right" id="imagePanel">
+          <img id="welcomeImage" src="../static/img/senfio.png" alt="Imagem de boas-vindas" style="display: none;" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script -->
+  <script src="../static/js/script.js"></script>
+</body>
+</html>
